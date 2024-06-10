@@ -8,7 +8,7 @@
   - [3.1 process_single_corpus.py文件](#process_single_corpuspy文件)
   - [3.2 word_dict.py文件](#word_dictpy文件)
   - [3.3 python_structured.py文件](#python_structuredpy文件)
-  - [3.4 sql_structured.py文件](#sql_structuredpy文件)
+  - [3.4 sqlang_structured.py文件](#sqlang_structuredpy文件)
   - [3.5 getSru2Vec.py文件](#getsru2vecpy文件)
   - [3.6 embddings_process.py文件](#embddings_processpy文件)
 - [四、总结](#四总结)
@@ -40,18 +40,16 @@
 - `data_staqc_prpcessing(filepath,single_path,mutiple_path)`:把语料中的单候选和多候选分隔开。
 ---
 
-### word_dirt.py文件
+### word_dict.py文件
 
-#### 1 概述
-  构建语料词典
-  
-#### 2 具体功能描述
+#### 1. 概述
+该代码用于构建词典，通过遍历语料库中的数据，将所有单词添加到一个集合中，从而构建词汇表。在构建最终词汇表时，首先加载已有的词汇表，然后获取新的词汇表，并找到新的单词。最后，将新的单词保存到最终词汇表文件中。
 
-- `load_pickle(filename)`：读取pickle二进制文件。
-- `get_vocab(filepath1, filepath2)`：构建初步词典的具体步骤1，查找两个文本语料库中的单词并生成词汇表。
-- `vocab_prpcessing(filepath1,filepath2,save_path)`：构建初步词典，从两个文本数据集中获取全部出现过的单词，并将单词保存到文件中。
-- `final_vocab_prpcessing(filepath1,filepath2,save_path)`:最终构建的词典，获取两个文本数据集中出现的单词的集合，并且仅返回在第二个数据集中出现过而未在第一个数据集中出现过的单词的集合。
----
+#### 2. 具体功能
+- `get_vocab`：根据给定的两个语料库，获取词汇表。该函数遍历语料库中的数据，并将所有单词添加到一个集合中，最终返回词汇表。
+- `load_pickle`：从pickle文件中加载数据并返回。
+- `vocab_processing`：用于处理语料库文件和保存词汇表的文件路径。该函数调用load_pickle()函数加载语料库数据，然后调用get_vocab()函数获取词汇表，并将词汇表保存到指定的文件路径中。
+- `final_vocab_processing`：首先从文件中加载已有的词汇表，然后调用get_vocab()函数获取新的词汇表。将新的词汇表与已有词汇表进行比较，找到新的单词，并将其保存到指定的文件路径中。
 
 ### python_structured.py文件
 
@@ -76,7 +74,7 @@
 - `python_part_context_parse(line)`:将提供的文本进行标准化和归一化处理,除去部分特殊字符。
 ---
 
-### sql_structured.py文件
+### sqlang_structured.py文件
 
 #### 1 概述
   解析 SQL 代码，修复代码中的变量命名问题；
