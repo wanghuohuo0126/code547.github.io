@@ -79,41 +79,41 @@
   对数据进行处理和转换，包括加载数据、统计问题的单候选和多候选情况，将数据分为单候选和多候选部分，以及将有标签的数据生成为带有标签的形式。
   
 #### 2 具体功能描述
-- `sanitizeSql`：用于对输入的SQL语句进行预处理，去除多余的空格和符号，并在语句末尾添加分号。
-- `tokenizeRegex`：使用正则表达式模式将字符串进行分词，返回分词后的结果。
-- `removeWhitespaces`：去除SQL语句中的空白符号。
-- `identifySubQueries`：识别子查询并将其标记为特定类型。
-- `identifyLiterals`：识别SQL语句中的关键字、字面量和其他标记，并将其相应地标记为特定类型。
-- `identifyFunctions`：识别SQL语句中的函数，并将其标记为特定类型。
-- `identifyTables`：识别SQL语句中的表和列，并将其相应地标记为特定类型。
-- `parseStrings`：解析SQL语句中的字符串，并将其标记为特定类型。
-- `renameIdentifiers`：对标识符（表名、列名）进行重命名，以避免冲突。
-- `process_nl_line`：用于对自然语言句子进行处理，包括恢复缩写、去除多余的空格和括号，并去除句子末尾的点号。
-- `get_wordpos`：根据词性标注的结果，返回对应的词性。
-- `process_sent_word`：对句子进行分词、词性标注、词性还原和词干提取，返回处理后的单词列表。
-- `filter_all_invachar`：用于过滤句子中的非常用符号。
-- `filter_part_invachar`：用于过滤代码中的非常用符号。
-- `sqlang_code_parse`：用于解析SQL代码并返回代码中的标记列表。
-- `sqlang_query_parse`：用于解析SQL查询句子并返回句子中的标记列表。
-- `sqlang_context_parse`：用于解析SQL上下文句子并返回句子中的标记列表。
+- `repair_program_io(code)`：修复代码块中的输入输出标志，并返回修复后的代码和代码块列表。
+- `get_vars(ast_root)`：提取代码中的变量，并返回排序后的变量集合。
+- `get_vars_heuristics(code)`：使用启发式方法提取代码中的变量名。
+- `PythonParser(code)`：解析Python代码，提取变量名，并对代码进行标记化处理。
+- `revert_abbrev(line)`：使用正则表达式匹配并恢复常见的英语缩写形式。
+- `get_wordpos(tag)`：根据词性标注的标签返回对应的词性。
+- `process_nl_line(line)`：对句子进行预处理，包括恢复缩写、去除多余的制表符和换行符、去除括号内容、去除多余空格和骆驼命名转下划线。
+- `process_sent_word(line)`：对句子进行分词处理，包括替换小数、字符串、十六进制、数字和特定字符，进行词性标注和词干提取。
+- `filter_all_invachar(line)`：去除字符串中的非常用符号，包括制表符、换行符、连续的中横线和下划线，以及横杠。
+- `filter_part_invachar(line)`：与`filter_all_invachar`类似，但保留部分符号。
+- `python_code_parse(line)`：对Python代码进行预处理和解析，提取tokens。
+- `python_query_parse(line)`：对自然语言查询进行预处理和解析，提取tokens。
+- `python_context_parse(line)`：对自然语言上下文进行预处理和解析，提取tokens。
 ---
 
 ### sqlang_structured.py文件
 
 #### 1 概述
-  完成一个SQL语言解析器的功能，用于对SQL代码进行解析和处理。
+  处理SQL代码和自然语言查询，提取tokens并进行预处理。
   
 #### 2 具体功能描述
-- `multipro_python_query(data_list)`:Python 查询解析方法。
-- `multipro_python_code(data_list)`:Python 代码解析方法。
-- `multipro_python_context(data_list)`:Python 上下文解析方法。
-- `multipro_sql_query(data_list)`:SQL查询解析方法。
-- `multipro_sql_code(data_list)`:SQL代码解析方法。
-- `multipro_sql_context(data_list)`:SQL上下文解析方法。
-- `python_parse_final(python_list,split_num)`:最终的python版解析函数。
-- `sql_parse_final(sql_list,split_num)`:最终的sql版解析函数。
-- `main(lang_type,split_num,source_path,save_path)`:将两个版本的解析集合到一个函数中，并保存解析结果。
-- `test(path1,path2)`:测试文件是否保存成功。
+- `filter_all_invachar(line)`:去除字符串中的非常用符号，包括制表符、换行符、连续的中横线和下划线，以及横杠。
+- `filter_part_invachar(line)`:与filter_all_invachar类似，但保留部分符号。
+- `sqlang_code_parse(line)`:对SQL代码进行预处理和解析，提取tokens。
+- `sqlang_query_parse(line)`:对自然语言查询进行预处理和解析，提取tokens。
+- `sqlang_context_parse(line)对自然语言上下文进行预处理和解析，提取tokens。`:
+- `revert_abbrev(line)`:使用正则表达式匹配并恢复常见的英语缩写形式。
+- `get_wordpos(tag)`:根据词性标注的标签返回对应的词性。
+- `process_nl_line(line)`:对句子进行预处理，包括恢复缩写、去除多余的制表符和换行符、去除括号内容、去除多余空格和骆驼命名转下划线。
+- `process_sent_word(line)`:对句子进行分词处理，包括替换小数、字符串、十六进制、数字和特定字符，进行词性标注和词干提取。
+- `filter_all_invachar(line)`:去除字符串中的非常用符号，包括制表符、换行符、连续的中横线和下划线，以及横杠。
+- `filter_part_invachar(line)`:与`filter_all_invachar`类似，但保留部分符号。
+- `sqlang_code_parse(line)`:对SQL代码进行预处理和解析，提取tokens。
+- `sqlang_query_parse(line)`:对自然语言查询进行预处理和解析，提取tokens。
+- `sqlang_context_parse(line)`:对自然语言上下文进行预处理和解析，提取tokens。
 ---
 
 ### word_dict.py文件
