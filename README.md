@@ -17,7 +17,7 @@
   
 ## 二、项目结构
 ```
-├── ulabel_data
+├── hnn_preprocessing 
 │   └── embddings_process.py  
 │   └── getStru2Vec.py
 │   └── process_single_corpus.py
