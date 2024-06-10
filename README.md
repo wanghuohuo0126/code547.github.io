@@ -5,12 +5,12 @@
 - [一、项目概述](#一项目概述)
 - [二、项目结构](#二项目结构)
 - [三、文件说明](#三文件说明)
-  - [3.1 process_single_corpus.py文件](#process_single_corpuspy文件)
-  - [3.2 word_dict.py文件](#word_dictpy文件)
-  - [3.3 python_structured.py文件](#python_structuredpy文件)
-  - [3.4 sql_structured.py文件](#sql_structuredpy文件)
-  - [3.5 getSru2Vec.py文件](#getsru2vecpy文件)
-  - [3.6 embddings_process.py文件](#embddings_processpy文件)
+  - [3.1 process_single_corpus.py文件](#3.1process_single_corpuspy文件)
+  - [3.2 word_dict.py文件](#3.2word_dictpy文件)
+  - [3.3 python_structured.py文件](#3.3python_structuredpy文件)
+  - [3.4 sql_structured.py文件](#3.4sql_structuredpy文件)
+  - [3.5 getSru2Vec.py文件](#3.5getsru2vecpy文件)
+  - [3.6 embddings_process.py文件](#3.6embddings_processpy文件)
 - [四、总结](#四总结)
 
 ## 一、项目概述
