@@ -5,13 +5,12 @@
 - [一、项目概述](#一项目概述)
 - [二、项目结构](#二项目结构)
 - [三、文件说明](#三文件说明)
-  - [3.1 process_single_corpus.py文件](#process_single_corpuspy文件)
-  - [3.2 word_dict.py文件](#word_dictpy文件)
-  - [3.3 python_structured.py文件](#python_structuredpy文件)
-  - [3.4 sqlang_structured.py文件](#sqlang_structuredpy文件)
-  - [3.5 getSru2Vec.py文件](#getsru2vecpy文件)
-  - [3.6 embddings_process.py文件](#embddings_processpy文件)
-- [四、总结](#四总结)
+  - [3.1 embddings_process.py文件](#embddings_processpy文件)
+  - [3.5 getStru2Vec.py文件](#getstru2vecpy文件)
+  - [3.3 process_single_corpus.py文件](#process_single_corpuspy文件)
+  - [3.4 python_structured.py文件](#python_structuredpy文件)
+  - [3.5 sqlang_structured.py文件](#sqlang_structuredpy文件)
+  - [3.6 word_dict.py文件](#word_dictpy文件)
 
 ## 一、项目概述
   此项目的python文件是对文本数据进行预测处理。通过给出python文件，对文件进行代码注释。
@@ -19,99 +18,90 @@
 ## 二、项目结构
 ```
 ├── ulabel_data
-│   └── embaddings_process.py  
+│   └── embddings_process.py  
 │   └── getStru2Vec.py
 │   └── process_single_corpus.py
 │   └── python_structured.py
 │   └── sqlang_structured.py
-│   └── word_dirt.py
+│   └── word_dict.py
 ```
 ## 三、文件说明
 
-### process_single_corpus.py文件
+### embddings_process.py文件
 
 #### 1 概述
-  把语料中的单候选和多候选分隔开
+  处理和序列化词向量和语料数据，以便后续的自然语言处理任务。
 
 #### 2 具体功能描述
 
-- `load_pickle(filename)`：读取pickle二进制文件。
-- `single_list(arr, target)`：计算一个列表中指定元素的出现次数。arr为
-- `data_staqc_prpcessing(filepath,single_path,mutiple_path)`:把语料中的单候选和多候选分隔开。
----
-
-### word_dict.py文件
-
-#### 1. 概述
-该代码用于构建词典，通过遍历语料库中的数据，将所有单词添加到一个集合中，从而构建词汇表。在构建最终词汇表时，首先加载已有的词汇表，然后获取新的词汇表，并找到新的单词。最后，将新的单词保存到最终词汇表文件中。
-
-#### 2. 具体功能
-- `get_vocab`：根据给定的两个语料库，获取词汇表。该函数遍历语料库中的数据，并将所有单词添加到一个集合中，最终返回词汇表。
-- `load_pickle`：从pickle文件中加载数据并返回。
-- `vocab_processing`：用于处理语料库文件和保存词汇表的文件路径。该函数调用load_pickle()函数加载语料库数据，然后调用get_vocab()函数获取词汇表，并将词汇表保存到指定的文件路径中。
-- `final_vocab_processing`：首先从文件中加载已有的词汇表，然后调用get_vocab()函数获取新的词汇表。将新的词汇表与已有词汇表进行比较，找到新的单词，并将其保存到指定的文件路径中。
-
-### python_structured.py文件
-
-#### 1 概述
-  解析 Python 代码，修复代码中的变量命名问题；
-  代码重构，添加变量名的注释。
-  
-#### 2 具体功能描述
-- `format_io(code)`:修复 Python 程序中的标准输入/输出（I/O）格式。
-- `get_vars(ast_root)`：获取变量名。
-- `get_all_vars(code)`:一个具有启发式的解析器，旨在从 code 字符串中尽可能多地提取变量名。
-- `PythonParser(code)`: 将代码字符串解析为Token 序列，并且执行变量解析。
- └──`first_trial(_code)`:尝试将该代码字符串解析为token令牌序列。
-- `revert_abbrev(line)`:缩略词处理，将常见的英语缩写还原为它们的原始形式。
-- `get_word_pos(tag)`:获取词性。
-- `preprocess_sentence(line)`:对传入的一行文本进行处理预处理：空格，还原缩写，下划线命名，去括号，去除开头末尾空格。
-- `process_words(line)`:对一个句子进行分词、词性标注、还原和提取词干的功能。
-- `filter_all_invachar(line)`：过滤掉Python代码中不常用的字符，以减少解析时的错误。
-- `filter_part_invachar(line)`:过滤掉Python代码中部分不常用的字符，以减少解析时的错误。
-- `python_query_parse(line)`:解析 python 查询语句，进行文本预处理。
-- `python_all_context_parse(line)`:将提供的文本进行标准化和归一化处理,除去所有特殊字符。
-- `python_part_context_parse(line)`:将提供的文本进行标准化和归一化处理,除去部分特殊字符。
----
-
-### sqlang_structured.py文件
-
-#### 1 概述
-  解析 SQL 代码，修复代码中的变量命名问题；
-  代码重构，添加变量名的注释。
-  
-#### 2 具体功能描述
-- `string_scanner(s)`:扫描字符串。
-- `SqlParser()`: SQL语句处理。  
-   └──`formatSql(sql)`:对输入的SQL语句进行清理和标准化。  
-   └──`parseStringsTokens(self, tok)`:将输入的SQL解析为一个SQL令牌列表,并对其进行处理。    
-   └──`renameIdentifiers(self, tok)`:重命名 SQL 语句中的标识符。  
-   └──` _hash_(self)`:将 SQL 解析器对象哈希化。  
-   └──`_init__(self, sql, regex=False, rename=True)`:初始化。  
-   └──`getTokens(parse)`:获取令牌序列。  
-   └──` removeWhitespaces(self, tok)`:删除多余空格。  
-   └──`identifySubQueries(self, tokenList)`:识别 SQL 表达式中的子查询。  
-   └──`identifyLiterals(self, tokenList)`:用于标识 SQL 解析器对象中的不同类型的文本字面量。  
-   └──`identifyFunctions(self, tokenList)`:从给定的token列表中识别SQL语句中的函数并设置ttype类型。  
-   └──`identifyTables(self, tokenList)`:标识SQL语句中的表（table）与列（column），并在token的ttype属性中记录信息来标识识别的结果。    
-   └──`__str__(self)`:将SQL语句的tokens列表中的所有token连接成一个字符串。  
-   └──`parseSql(self)`:返回SQL语句中所有token的字符串列表。
-- `revert_abbrev(line)`:缩略词处理，将常见的英语缩写还原为它们的原始形式。
-- `get_word_pos(tag)`:获取词性。
-- `preprocess_sentence(line)`:对传入的一行文本进行处理预处理：空格，还原缩写，下划线命名，去括号，去除开头末尾空格。
-- `process_words(line)`:对一个句子进行分词、词性标注、还原和提取词干的功能。
-- `filter_all_invachar(line)`：过滤掉SQL代码中不常用的字符，以减少解析时的错误。
-- `filter_part_invachar(line)`:过滤掉SQL代码中部分不常用的字符，以减少解析时的错误。
-- `sql_query_parse(line)`:解析 SQL 查询语句，进行文本预处理。
-- `sql_all_context_parse(line)`:将提供的文本进行标准化和归一化处理,除去所有特殊字符。
-- `sqlpart_context_parse(line)`:将提供的文本进行标准化和归一化处理,除去部分特殊字符。
-
+- `trans_bin(path1, path2)`：将文本格式的词向量文件转换并保存为二进制文件，以提高加载速度。
+- `get_new_dict(type_vec_path, type_word_path, final_vec_path, final_word_path)`：根据给定的词向量文件和词典文件，构建新的词典和词向量矩阵，并保存为二进制文件。
+- `get_index(type, text, word_dict)`:根据词典获取文本中每个词的位置索引。
+- `serialization(word_dict_path, type_path, final_type_path)`:将语料数据序列化并保存为二进制文件。
+- `主程序入口`:定义了各种文件路径，并调用上述函数进行词向量转换、词典构建和语料序列化。
 ---
 
 ### getStru2Vec.py文件
 
 #### 1 概述
-  获取最终的python解析文本和SQL解析文本。
+  并行处理Python和SQL的查询、代码和上下文数据。通过多进程处理，可以加快数据处理速度。
+
+#### 2 具体功能描述
+
+- `multipro_python_query(data_list)`：处理Python查询数据。
+- `multipro_python_code(data_list)`：处理Python代码数据。
+- `multipro_python_context(data_list)`:处理Python上下文数据。
+- `multipro_sqlang_query(data_list)`:处理SQL查询数据。
+- `multipro_sqlang_code(data_list)`:处理SQL代码数据。
+- `multipro_sqlang_context(data_list)`:处理SQL上下文数据。
+- `parse(data_list, split_num, context_func, query_func, code_func)`:使用多进程处理数据列表，并返回处理后的上下文、查询和代码数据。
+- `main(lang_type, split_num, source_path, save_path, context_func, query_func, code_func)`:加载数据，调用解析函数处理数据，并将处理后的数据保存到文件中。
+- `主程序入口`:定义了每个进程处理的数据量`split_num`，分别处理Python和SQL的Staqc数据和大型数据，并保存处理后的结果。
+---
+
+### process_single_corpus.py文件
+
+#### 1 概述
+  处理和拆分Python和SQL的查询数据，并将未标记的数据转换为带标签的数据。
+  
+#### 2 具体功能描述
+- `load_pickle(filename)`:从文件中加载pickle格式的数据。
+- `split_data(total_data, qids)`：根据问题ID的出现次数，将数据拆分为单个问题ID的数据和多个问题ID的数据。
+- `data_staqc_processing(filepath, save_single_path, save_multiple_path)`:处理staqc格式的数据，将其拆分为单个和多个部分，并保存结果。
+- `data_large_processing(filepath, save_single_path, save_multiple_path)`: 处理大型数据集，将其拆分为单个和多个部分，并保存结果。
+- `single_unlabeled_to_labeled(input_path, output_path)`:将未标记的单个数据转换为带标签的数据，并保存结果。
+- `主程序入口`:处理staqc格式的Python和SQL数据，处理大型Python和SQL数据，将未标记的单个数据转换为带标签的数据。
+---
+
+###  python_structured.py文件
+
+#### 1 概述
+  对数据进行处理和转换，包括加载数据、统计问题的单候选和多候选情况，将数据分为单候选和多候选部分，以及将有标签的数据生成为带有标签的形式。
+  
+#### 2 具体功能描述
+- `sanitizeSql`：用于对输入的SQL语句进行预处理，去除多余的空格和符号，并在语句末尾添加分号。
+- `tokenizeRegex`：使用正则表达式模式将字符串进行分词，返回分词后的结果。
+- `removeWhitespaces`：去除SQL语句中的空白符号。
+- `identifySubQueries`：识别子查询并将其标记为特定类型。
+- `identifyLiterals`：识别SQL语句中的关键字、字面量和其他标记，并将其相应地标记为特定类型。
+- `identifyFunctions`：识别SQL语句中的函数，并将其标记为特定类型。
+- `identifyTables`：识别SQL语句中的表和列，并将其相应地标记为特定类型。
+- `parseStrings`：解析SQL语句中的字符串，并将其标记为特定类型。
+- `renameIdentifiers`：对标识符（表名、列名）进行重命名，以避免冲突。
+- `process_nl_line`：用于对自然语言句子进行处理，包括恢复缩写、去除多余的空格和括号，并去除句子末尾的点号。
+- `get_wordpos`：根据词性标注的结果，返回对应的词性。
+- `process_sent_word`：对句子进行分词、词性标注、词性还原和词干提取，返回处理后的单词列表。
+- `filter_all_invachar`：用于过滤句子中的非常用符号。
+- `filter_part_invachar`：用于过滤代码中的非常用符号。
+- `sqlang_code_parse`：用于解析SQL代码并返回代码中的标记列表。
+- `sqlang_query_parse`：用于解析SQL查询句子并返回句子中的标记列表。
+- `sqlang_context_parse`：用于解析SQL上下文句子并返回句子中的标记列表。
+---
+
+### sqlang_structured.py文件
+
+#### 1 概述
+  完成一个SQL语言解析器的功能，用于对SQL代码进行解析和处理。
   
 #### 2 具体功能描述
 - `multipro_python_query(data_list)`:Python 查询解析方法。
@@ -126,19 +116,15 @@
 - `test(path1,path2)`:测试文件是否保存成功。
 ---
 
-### embaddings_process.py文件
+### word_dict.py文件
 
 #### 1 概述
   从大词典中获取特定于于语料的词典；将数据处理成待打标签的形式
   
 #### 2 具体功能描述
-- `trans_bin(word_path,bin_path)`:词向量文件保存成bin文件。t
-- `get_new_dict(type_vec_path,type_word_path,final_vec_path,final_word_path)`:构建新的词典和词向量矩阵。
-- `get_index(type,text,word_dict)`:得到词在词典中的位置。
-- `Serialization(word_dict_path,type_path,final_type_path)`:将训练、测试、验证语料序列化。
-- `get_new_dict_append(type_vec_path,previous_dict,previous_vec,append_word_path,final_vec_path,final_word_path)`:将文件`append_word_path`中包含的新词添加到词典中，并在原有的词向量词表中按顺序添加相应的词向量。函数会先加载类型为`word2vec`的词标签及其对应的词向量。
+- `get_vocab(corpus1, corpus2)`:从两个语料库中提取词汇表，并返回词汇表。
+- `load_pickle(filename)`:从文件中加载pickle格式的数据，并返回数据。
+- `vocab_processing(filepath1, filepath2, save_path)`:从两个文件中加载数据，获取词汇表，排除不需要的词汇，并将处理后的词汇表保存到文件。
+- `主程序入口`:定义了各种文件路径，调用了处理词汇表的函数`final_vocab_processing`。
 ---
-
-## 四、总结  
-在本次实验中，学习并掌握了规范化代码。并且初步了解了npl项目如何进行文本数据的预处理与分析。
 
